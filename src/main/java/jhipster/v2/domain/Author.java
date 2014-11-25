@@ -3,8 +3,8 @@ package jhipster.v2.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.joda.deser.LocalDateDeserializer;
 import jhipster.v2.domain.util.CustomLocalDateSerializer;
+import jhipster.v2.domain.util.ISO8601LocalDateDeserializer;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
@@ -31,7 +31,7 @@ public class Author implements Serializable {
     private String name;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
     @JsonSerialize(using = CustomLocalDateSerializer.class)
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;

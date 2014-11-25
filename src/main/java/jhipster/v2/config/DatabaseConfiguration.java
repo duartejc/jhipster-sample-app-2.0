@@ -20,9 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableJpaRepositories("jhipster.v2.repository")

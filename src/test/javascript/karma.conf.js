@@ -15,7 +15,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/jquery/dist/jquery.js',
             'src/main/webapp/bower_components/angular/angular.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
-            'src/main/webapp/bower_components/angular-route/angular-route.js',
+            'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
             'src/main/webapp/bower_components/angular-resource/angular-resource.js',
             'src/main/webapp/bower_components/angular-cookies/angular-cookies.js',
             'src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js',
@@ -24,8 +24,10 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
             'src/main/webapp/bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js',
             'src/main/webapp/bower_components/angular-local-storage/dist/angular-local-storage.min.js',
-            'src/main/webapp/client/app.js',
-            'src/main/webapp/client/**/*.js',
+            'src/main/webapp/bower_components/angular-cache-buster/angular-cache-buster.js',
+            'src/main/webapp/app.js',
+            'src/main/webapp/app/**/*.js',
+            'src/main/webapp/components/**/*.js',
             'src/test/javascript/**/!(karma.conf).js'
         ],
 

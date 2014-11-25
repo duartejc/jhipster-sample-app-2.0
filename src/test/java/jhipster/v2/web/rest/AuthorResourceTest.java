@@ -1,5 +1,9 @@
 package jhipster.v2.web.rest;
 
+import jhipster.v2.Application;
+import jhipster.v2.domain.Author;
+import jhipster.v2.repository.AuthorRepository;
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,12 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import org.joda.time.LocalDate;
 import java.util.List;
-
-import jhipster.v2.Application;
-import jhipster.v2.domain.Author;
-import jhipster.v2.repository.AuthorRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -143,7 +142,7 @@ public class AuthorResourceTest {
         assertThat(authors).hasSize(1);
         Author testAuthor = authors.iterator().next();
         assertThat(testAuthor.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testAuthor.getBirthday()).isEqualTo(UPDATED_BIRTHDAY);;
+        assertThat(testAuthor.getBirthday()).isEqualTo(UPDATED_BIRTHDAY);
     }
 
     @Test

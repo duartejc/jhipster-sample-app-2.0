@@ -1,5 +1,8 @@
 package jhipster.v2.web.rest;
 
+import jhipster.v2.Application;
+import jhipster.v2.domain.Book;
+import jhipster.v2.repository.BookRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,10 +20,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.List;
-
-import jhipster.v2.Application;
-import jhipster.v2.domain.Book;
-import jhipster.v2.repository.BookRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -143,7 +142,7 @@ public class BookResourceTest {
         assertThat(books).hasSize(1);
         Book testBook = books.iterator().next();
         assertThat(testBook.getTitle()).isEqualTo(UPDATED_TITLE);
-        assertThat(testBook.getPrice()).isEqualTo(UPDATED_PRICE);;
+        assertThat(testBook.getPrice()).isEqualTo(UPDATED_PRICE);
     }
 
     @Test
