@@ -58,7 +58,7 @@ angular.module('hipster2App')
 
         $scope.refresh();
 
-        $scope.threadDump = function () {
+        $scope.refreshThreadDumpData = function () {
             MonitoringService.threadDump().then(function (data) {
                 $scope.threadDump = data;
 

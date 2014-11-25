@@ -17,7 +17,7 @@ angular.module('hipster2App')
                 }
             });
     })
-    .controller('LoginController', function ($scope, $state, Auth) {
+    .controller('LoginController', function ($rootScope, $scope, $state, Auth) {
         $scope.user = {};
         $scope.errors = {};
 
@@ -29,9 +29,7 @@ angular.module('hipster2App')
                 rememberMe: $scope.rememberMe
             }).then(function () {
                 $scope.authenticationError = false;
-                // Logged in, redirect to home
-                $state.go('home');
-
+                $rootScope.back();
             }).catch(function (err) {
                 $scope.authenticationError = true;
             });

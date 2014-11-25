@@ -5,10 +5,6 @@ security.basic.enabled: false
 # Disable Jolokia - An http/json bridge for remote JMX access
 endpoints.jolokia.enabled: false
 
-# Disable the check on unknown properties
-spring.jackson.deserialization:
-    FAIL_ON_UNKNOWN_PROPERTIES: false
-
 # security configuration (this key should be unique for your application, and kept secret)
 jhipster.security.rememberme.key: hipster2
 
