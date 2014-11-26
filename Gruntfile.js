@@ -1,4 +1,4 @@
-// Generated on 2014-11-25 using generator-jhipster 1.9.0
+// Generated on 2014-11-26 using generator-jhipster 1.9.0
 'use strict';
 
 var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
@@ -331,7 +331,7 @@ module.exports = function (grunt) {
         },
         karma: {
             unit: {
-                configFile: 'src/test/javascript/karma.conf.js',
+                configFile: 'src/main/webapp/test/karma.conf.js',
                 singleRun: true
             }
         },
