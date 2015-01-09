@@ -1,13 +1,10 @@
 package jhipster.v2.web.rest;
 
-import jhipster.v2.Application;
-import jhipster.v2.domain.Author;
-import jhipster.v2.repository.AuthorRepository;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,7 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import org.joda.time.LocalDate;
 import java.util.List;
+
+import jhipster.v2.Application;
+import jhipster.v2.domain.Author;
+import jhipster.v2.repository.AuthorRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -33,14 +35,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
+@IntegrationTest
 public class AuthorResourceTest {
 
     private static final String DEFAULT_NAME = "SAMPLE_TEXT";
     private static final String UPDATED_NAME = "UPDATED_TEXT";
-    
+
     private static final LocalDate DEFAULT_BIRTHDAY = new LocalDate(0L);
     private static final LocalDate UPDATED_BIRTHDAY = new LocalDate();
-    
 
     @Inject
     private AuthorRepository authorRepository;
@@ -71,7 +73,7 @@ public class AuthorResourceTest {
         assertThat(authorRepository.findAll()).hasSize(0);
 
         // Create the Author
-        restAuthorMockMvc.perform(post("/app/rest/authors")
+        restAuthorMockMvc.perform(post("/api/authors")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(author)))
                 .andExpect(status().isOk());
@@ -91,9 +93,8 @@ public class AuthorResourceTest {
         authorRepository.saveAndFlush(author);
 
         // Get all the authors
-        restAuthorMockMvc.perform(get("/app/rest/authors"))
+        restAuthorMockMvc.perform(get("/api/authors"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[0].id").value(author.getId().intValue()))
                 .andExpect(jsonPath("$.[0].name").value(DEFAULT_NAME.toString()))
@@ -107,7 +108,7 @@ public class AuthorResourceTest {
         authorRepository.saveAndFlush(author);
 
         // Get the author
-        restAuthorMockMvc.perform(get("/app/rest/authors/{id}", author.getId()))
+        restAuthorMockMvc.perform(get("/api/authors/{id}", author.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(author.getId().intValue()))
@@ -119,7 +120,7 @@ public class AuthorResourceTest {
     @Transactional
     public void getNonExistingAuthor() throws Exception {
         // Get the author
-        restAuthorMockMvc.perform(get("/app/rest/authors/{id}", 1L))
+        restAuthorMockMvc.perform(get("/api/authors/{id}", 1L))
                 .andExpect(status().isNotFound());
     }
 
@@ -132,7 +133,7 @@ public class AuthorResourceTest {
         // Update the author
         author.setName(UPDATED_NAME);
         author.setBirthday(UPDATED_BIRTHDAY);
-        restAuthorMockMvc.perform(post("/app/rest/authors")
+        restAuthorMockMvc.perform(post("/api/authors")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(author)))
                 .andExpect(status().isOk());
@@ -152,7 +153,7 @@ public class AuthorResourceTest {
         authorRepository.saveAndFlush(author);
 
         // Get the author
-        restAuthorMockMvc.perform(delete("/app/rest/authors/{id}", author.getId())
+        restAuthorMockMvc.perform(delete("/api/authors/{id}", author.getId())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 

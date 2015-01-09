@@ -31,8 +31,8 @@ public class Author implements Serializable {
     private String name;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
     @JsonSerialize(using = CustomLocalDateSerializer.class)
+    @JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 

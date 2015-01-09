@@ -1,9 +1,11 @@
 package jhipster.v2.config;
 
 import jhipster.v2.security.*;
+import jhipster.v2.web.filter.CsrfCookieGeneratorFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
@@ -12,9 +14,10 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 import javax.inject.Inject;
 
@@ -58,20 +61,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
+            .antMatchers("/scripts/**/*.{js,html}")
             .antMatchers("/bower_components/**")
-            .antMatchers("/fonts/**")
-            .antMatchers("/images/**")
-            .antMatchers("/scripts/**")
-            .antMatchers("/styles/**")
-            .antMatchers("/views/**")
             .antMatchers("/i18n/**")
+            .antMatchers("/assets/**")
             .antMatchers("/swagger-ui/**")
+            .antMatchers("/test/**")
             .antMatchers("/console/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+            .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
             .exceptionHandling()
             .authenticationEntryPoint(authenticationEntryPoint)
         .and()
@@ -80,7 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .key(env.getProperty("jhipster.security.rememberme.key"))
         .and()
             .formLogin()
-            .loginProcessingUrl("/app/authentication")
+            .loginProcessingUrl("/api/authentication")
             .successHandler(ajaxAuthenticationSuccessHandler)
             .failureHandler(ajaxAuthenticationFailureHandler)
             .usernameParameter("j_username")
@@ -88,22 +90,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .permitAll()
         .and()
             .logout()
-            .logoutUrl("/app/logout")
+            .logoutUrl("/api/logout")
             .logoutSuccessHandler(ajaxLogoutSuccessHandler)
-            .deleteCookies("JSESSIONID")
+            .deleteCookies("JSESSIONID", "hazelcast.sessionId", "CSRF-TOKEN")
             .permitAll()
         .and()
-            .csrf()
-            .disable()
             .headers()
             .frameOptions()
             .disable()
             .authorizeRequests()
-                .antMatchers("/app/rest/register").permitAll()
-                .antMatchers("/app/rest/activate").permitAll()
-                .antMatchers("/app/rest/authenticate").permitAll()
-                .antMatchers("/app/rest/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/app/rest/**").authenticated()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/logs/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/**").authenticated()
                 .antMatchers("/metrics/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/health/**").hasAuthority(AuthoritiesConstants.ADMIN)
                 .antMatchers("/trace/**").hasAuthority(AuthoritiesConstants.ADMIN)

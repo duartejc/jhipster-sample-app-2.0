@@ -18,7 +18,7 @@ import java.util.Optional;
  * REST controller for managing Book.
  */
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/api")
 public class BookResource {
 
     private final Logger log = LoggerFactory.getLogger(BookResource.class);
@@ -27,9 +27,9 @@ public class BookResource {
     private BookRepository bookRepository;
 
     /**
-     * POST  /rest/books -> Create a new book.
+     * POST  /books -> Create a new book.
      */
-    @RequestMapping(value = "/rest/books",
+    @RequestMapping(value = "/books",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -39,9 +39,9 @@ public class BookResource {
     }
 
     /**
-     * GET  /rest/books -> get all the books.
+     * GET  /books -> get all the books.
      */
-    @RequestMapping(value = "/rest/books",
+    @RequestMapping(value = "/books",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -51,9 +51,9 @@ public class BookResource {
     }
 
     /**
-     * GET  /rest/books/:id -> get the "id" book.
+     * GET  /books/:id -> get the "id" book.
      */
-    @RequestMapping(value = "/rest/books/{id}",
+    @RequestMapping(value = "/books/{id}",
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -67,9 +67,9 @@ public class BookResource {
     }
 
     /**
-     * DELETE  /rest/books/:id -> delete the "id" book.
+     * DELETE  /books/:id -> delete the "id" book.
      */
-    @RequestMapping(value = "/rest/books/{id}",
+    @RequestMapping(value = "/books/{id}",
             method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed

@@ -1,12 +1,10 @@
 package jhipster.v2.web.rest;
 
-import jhipster.v2.Application;
-import jhipster.v2.domain.Book;
-import jhipster.v2.repository.BookRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,6 +19,10 @@ import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.List;
 
+import jhipster.v2.Application;
+import jhipster.v2.domain.Book;
+import jhipster.v2.repository.BookRepository;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -33,14 +35,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
+@IntegrationTest
 public class BookResourceTest {
 
     private static final String DEFAULT_TITLE = "SAMPLE_TEXT";
     private static final String UPDATED_TITLE = "UPDATED_TEXT";
-    
+
     private static final BigDecimal DEFAULT_PRICE = BigDecimal.ZERO;
     private static final BigDecimal UPDATED_PRICE = BigDecimal.ONE;
-    
 
     @Inject
     private BookRepository bookRepository;
@@ -71,7 +73,7 @@ public class BookResourceTest {
         assertThat(bookRepository.findAll()).hasSize(0);
 
         // Create the Book
-        restBookMockMvc.perform(post("/app/rest/books")
+        restBookMockMvc.perform(post("/api/books")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(book)))
                 .andExpect(status().isOk());
@@ -91,9 +93,8 @@ public class BookResourceTest {
         bookRepository.saveAndFlush(book);
 
         // Get all the books
-        restBookMockMvc.perform(get("/app/rest/books"))
+        restBookMockMvc.perform(get("/api/books"))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[0].id").value(book.getId().intValue()))
                 .andExpect(jsonPath("$.[0].title").value(DEFAULT_TITLE.toString()))
@@ -107,7 +108,7 @@ public class BookResourceTest {
         bookRepository.saveAndFlush(book);
 
         // Get the book
-        restBookMockMvc.perform(get("/app/rest/books/{id}", book.getId()))
+        restBookMockMvc.perform(get("/api/books/{id}", book.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(book.getId().intValue()))
@@ -119,7 +120,7 @@ public class BookResourceTest {
     @Transactional
     public void getNonExistingBook() throws Exception {
         // Get the book
-        restBookMockMvc.perform(get("/app/rest/books/{id}", 1L))
+        restBookMockMvc.perform(get("/api/books/{id}", 1L))
                 .andExpect(status().isNotFound());
     }
 
@@ -132,7 +133,7 @@ public class BookResourceTest {
         // Update the book
         book.setTitle(UPDATED_TITLE);
         book.setPrice(UPDATED_PRICE);
-        restBookMockMvc.perform(post("/app/rest/books")
+        restBookMockMvc.perform(post("/api/books")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(book)))
                 .andExpect(status().isOk());
@@ -152,7 +153,7 @@ public class BookResourceTest {
         bookRepository.saveAndFlush(book);
 
         // Get the book
-        restBookMockMvc.perform(delete("/app/rest/books/{id}", book.getId())
+        restBookMockMvc.perform(delete("/api/books/{id}", book.getId())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk());
 
