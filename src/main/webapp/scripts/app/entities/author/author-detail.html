@@ -1,38 +1,37 @@
 
-<div>
-    <h2><span translate="hipster2App.author.detail.title">Author</span> {{author.id}}</h2>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th translate="entity.detail.field">Field</th>
-                    <th translate="entity.detail.value">Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <span translate="hipster2App.author.name">Name</span>
-                    </td>
-                    <td>
-                        <input type="text" class="input-sm form-control" value="{{author.name}}" readonly>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span translate="hipster2App.author.birthday">Birthday</span>
-                    </td>
-                    <td>
-                        <input type="text" class="input-sm form-control" value="{{author.birthday}}" readonly>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <button type="submit"
-            ui-sref="author"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
-    </button>
+<div class="row">
+	<div class="col-lg-12">
+		<rd-widget> 
+			<rd-widget-header icon="fa-users" title="{{author.name}}"></rd-widget-header> 
+		
+			<rd-widget-body classes="medium no-padding">
+			
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th translate="entity.detail.field">Field</th>
+								<th translate="entity.detail.value">Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><span translate="hipster2App.author.name">Name</span></td>
+								<td><input type="text" class="input-sm form-control" value="{{author.name}}" readonly></td>
+							</tr>
+							<tr>
+								<td><span translate="hipster2App.author.birthday">Birthday</span></td>
+								<td><input type="text" class="input-sm form-control" value="{{author.birthday}}" readonly></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</rd-widget-body> 
+			<rd-widget-footer>
+				<button type="submit" ui-sref="author" class="btn btn-info">
+					<span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+				</button>
+			</rd-widget-footer>
+		</rd-widget>
+	</div>
 </div>

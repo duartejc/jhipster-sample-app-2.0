@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hipster2App', ['LocalStorageModule', 'tmh.dynamicLocale',
-    'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster'])
+    'ngResource', 'ui.router', 'ui.bootstrap', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster'])
 
     .run(function ($rootScope, $location, $http, $state, $translate, Auth, Principal, Language) {
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {

@@ -1,9 +1,36 @@
 'use strict';
 
 angular.module('hipster2App')
-    .controller('MainController', function ($scope, Principal) {
-        Principal.identity().then(function(account) {
-            $scope.account = account;
-            $scope.isAuthenticated = Principal.isAuthenticated;
+    .controller('MainController', function ($scope, $cookieStore, Principal) {
+    	
+        /**
+         * Sidebar Toggle & Cookie Control
+         */
+        var mobileView = 992;
+
+        $scope.getWidth = function() {
+            return window.innerWidth;
+        };
+
+        $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+            if (newValue >= mobileView) {
+                if (angular.isDefined($cookieStore.get('toggle'))) {
+                    $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
+                } else {
+                    $scope.toggle = true;
+                }
+            } else {
+                $scope.toggle = false;
+            }
+
         });
+
+        $scope.toggleSidebar = function() {
+            $scope.toggle = !$scope.toggle;
+            $cookieStore.put('toggle', $scope.toggle);
+        };
+
+        window.onresize = function() {
+            $scope.$apply();
+        };
     });
