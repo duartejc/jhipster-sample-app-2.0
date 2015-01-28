@@ -33,4 +33,37 @@ angular.module('hipster2App')
         window.onresize = function() {
             $scope.$apply();
         };
+        
+        $scope.alerts = [{
+            type: 'success',
+            msg: 'Welcome, Java Hipster! This is your homepage.'
+        }];
+
+        if(Principal.isAuthenticated()){
+        	$scope.alerts.push({
+        		type: 'info',
+                msg: "You are logged in as user 'Admin'."
+            });
+        } else {
+        	$scope.alerts.push({
+        		type: 'warning',
+                msg: "If you want to <a href=\"#/login\">authenticate</a>, you can try the default login='admin' and password='admin'."
+            });
+        	
+        	$scope.alerts.push({
+        		type: 'warning',
+                msg: "Don't have an account? <a href=\"#/register\">Register</a>."
+            });
+        }
+        
+        $scope.addAlert = function() {
+            $scope.alerts.push({
+                msg: 'Another alert!'
+            });
+        };
+
+        $scope.closeAlert = function(index) {
+            $scope.alerts.splice(index, 1);
+        };
+        
     });
